@@ -22,7 +22,8 @@ def main():
 
         # Process the data
         if st.button("Match Title"):
-            df_song['SONG_Splitted'] = df_song['SONG'].apply(lambda x: ' '.join(x.split()[:2]) if len(x.split()) > 2 else x)
+            #df_song['SONG_Splitted'] = df_song['SONG'].apply(lambda x: ' '.join(x.split()[:2]) if len(x.split()) > 2 else x)
+            df_song['SONG_Splitted'] = df_song['SONG'].apply(lambda x: ' '.join(str(x).split()[:2]) if isinstance(x, str) and len(x.split()) > 2 else x)
             df_Title['SONG'] = ''
             df_Title['MOVIE'] = ''
 
