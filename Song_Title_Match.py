@@ -46,18 +46,19 @@ def main():
             # Save the processed data
             try:
                 filename = str(df_song['LANGUAGE'].mode().iloc[0])  # Get the mode and convert it to a string
-                df_Title.to_excel(filename + ".xlsx", index=False)
+                filename = filename + ".xlsx"
+                df_Title.to_excel(filename , index=False)
                 
                 st.success(f"Processing completed and file saved as {filename}.xlsx")
 
                 # Download button
-                download_button = create_download_button(filename + ".xlsx")
+                download_button = create_download_button(filename)
                 st.markdown(download_button, unsafe_allow_html=True)
             except Exception as e:
                 st.error(f"Error occurred while saving the file: {e}")
 
 
-def create_download_button(file_path):
+def create_download_button(file_path, filename):
     with open(file_path, "rb") as file:
         file_content = file.read()
     base64_encoded_file = base64.b64encode(file_content).decode('utf-8')
