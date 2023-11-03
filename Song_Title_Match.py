@@ -28,13 +28,11 @@ def main():
             df_Title['MOVIE'] = ''
 
             for _, row in df_song.iterrows():
-                # song = row['SONG_Splitted'].lower() + ' '
-                # movie = row['MOVIE'].lower() + ' '
                 song = str(row['SONG_Splitted']).lower() + ' '
                 movie = str(row['MOVIE']).lower() + ' '
 
                 for index, title in df_Title['Title'].items():
-                    title_lower = title.lower().replace(":", " ")
+                    title_lower = str(title.lower()).replace(":", " ")
 
                     if song in title_lower:
                         df_Title.at[index, 'SONG'] = row['SONG']
