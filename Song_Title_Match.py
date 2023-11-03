@@ -28,8 +28,10 @@ def main():
             df_Title['MOVIE'] = ''
 
             for _, row in df_song.iterrows():
-                song = row['SONG_Splitted'].lower() + ' '
-                movie = row['MOVIE'].lower() + ' '
+                # song = row['SONG_Splitted'].lower() + ' '
+                # movie = row['MOVIE'].lower() + ' '
+                song = str(row['SONG_Splitted']).lower() + ' '
+                movie = str(row['MOVIE']).lower() + ' '
 
                 for index, title in df_Title['Title'].items():
                     title_lower = title.lower().replace(":", " ")
@@ -41,11 +43,13 @@ def main():
 
             # Save the processed data
             try:
-                df_Title.to_excel("Bengali_Songs.xlsx", index=False)
-                st.success("Processing completed and file saved as Bengali_Songs.xlsx")
+                filename = str(df_song['LANGUAGE'].mode().iloc[0])  # Get the mode and convert it to a string
+                df_Title.to_excel(filename + ".xlsx", index=False)
+                
+                st.success(f"Processing completed and file saved as {filename}.xlsx")
 
                 # Download button
-                download_button = create_download_button("Bengali_Songs.xlsx")
+                download_button = create_download_button(filename + ".xlsx")
                 st.markdown(download_button, unsafe_allow_html=True)
             except Exception as e:
                 st.error(f"Error occurred while saving the file: {e}")
