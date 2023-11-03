@@ -9,7 +9,12 @@ def main():
 
     # File Upload
     uploaded_file1 = st.file_uploader("Upload Title file", type=["xlsx"])
-    uploaded_file2 = st.file_uploader("Upload Movie List file", type=["xlsx"])
+    st.write("Upload a file containing titles. The file must be in Excel format (XLSX) with a 'Title' column.")
+    
+    uploaded_file2 = st.file_uploader("Upload Movie List file (SONG and MOVIE Column must be in the file)", type=["xlsx"])
+    st.write("Upload a file containing movie data. The file must be in Excel format (XLSX) with 'SONG' and 'MOVIE' columns.")
+    # Add some spacing for better readability
+    st.write("")  # Empty line for spacing
 
     if uploaded_file1 is not None and uploaded_file2 is not None:
         # Read uploaded files
@@ -22,7 +27,6 @@ def main():
 
         # Process the data
         if st.button("Match Title"):
-            #df_song['SONG_Splitted'] = df_song['SONG'].apply(lambda x: ' '.join(x.split()[:2]) if len(x.split()) > 2 else x)
             df_song['SONG_Splitted'] = df_song['SONG'].apply(lambda x: ' '.join(str(x).split()[:2]) if isinstance(x, str) and len(x.split()) > 2 else x)
             df_Title['SONG'] = ''
             df_Title['MOVIE'] = ''
@@ -57,7 +61,7 @@ def create_download_button(file_path):
     with open(file_path, "rb") as file:
         file_content = file.read()
     base64_encoded_file = base64.b64encode(file_content).decode('utf-8')
-    download_button = f'<a href="data:application/octet-stream;base64,{base64_encoded_file}" download="Bengali_Songs.xlsx">Download Excel File</a>'
+    download_button = f'<a href="data:application/octet-stream;base64,{base64_encoded_file}" download= {filename} + ".xlsx">Download Excel File</a>'
     return download_button
 
 
