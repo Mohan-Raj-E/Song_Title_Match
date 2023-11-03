@@ -9,7 +9,7 @@ def main():
 
     # File Upload
     uploaded_file1 = st.file_uploader("Upload Title file", type=["xlsx"])
-    st.write("Upload a file containing titles. The file must be in Excel format (XLSX) with a 'Title' column.")
+    st.write("Upload a file containing 'Titles'. The file must be in Excel format (XLSX) with a 'Title' column.")
     
     uploaded_file2 = st.file_uploader("Upload Movie List file (SONG and MOVIE Column must be in the file)", type=["xlsx"])
     st.write("Upload a file containing movie data. The file must be in Excel format (XLSX) with 'SONG' and 'MOVIE' columns.")
