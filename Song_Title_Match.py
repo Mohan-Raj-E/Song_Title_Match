@@ -58,11 +58,11 @@ def main():
                 st.error(f"Error occurred while saving the file: {e}")
 
 
-def create_download_button(file_path, filename):
+def create_download_button(file_path):
     with open(file_path, "rb") as file:
         file_content = file.read()
     base64_encoded_file = base64.b64encode(file_content).decode('utf-8')
-    download_button = f'<a href="data:application/octet-stream;base64,{base64_encoded_file}" download= {filename} + ".xlsx">Download Excel File</a>'
+    download_button = f'<a href="data:application/octet-stream;base64,{base64_encoded_file}" download= "Odia_Songs.xlsx">Download Excel File</a>'
     return download_button
 
 
