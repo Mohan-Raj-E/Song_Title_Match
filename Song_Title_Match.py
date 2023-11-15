@@ -3,8 +3,10 @@ import base64
 import streamlit as st
 import pandas as pd
 
-global filename
+
 def main():
+    global filename
+
     st.title("Song Title Match")
     st.write("Upload two Excel files and process them for Song Title Match.")
 
