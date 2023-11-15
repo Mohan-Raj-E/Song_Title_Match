@@ -51,7 +51,7 @@ def main():
 
             # Save the processed data
             try:
-                df_Title.to_excel(filename, index=False, engine='xlsxwriter')
+                df_Title.to_excel(filename, index=False)
 
                 st.success(f"Processing completed and file saved")
 
