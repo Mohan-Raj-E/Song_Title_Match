@@ -3,6 +3,7 @@ import base64
 import streamlit as st
 import pandas as pd
 
+global filename
 def main():
     st.title("Song Title Match")
     st.write("Upload two Excel files and process them for Song Title Match.")
@@ -10,9 +11,11 @@ def main():
     # File Upload
     uploaded_file1 = st.file_uploader("Upload Title file", type=["xlsx"])
     st.write("Upload a file containing 'Titles'. The file must be in Excel format (XLSX) with a 'Title' column.")
-    
-    uploaded_file2 = st.file_uploader("Upload Movie List file (SONG and MOVIE Column must be in the file)", type=["xlsx"])
-    st.write("Upload a file containing movie data. The file must be in Excel format (XLSX) with 'SONG' and 'MOVIE' columns.")
+
+    uploaded_file2 = st.file_uploader("Upload Movie List file (SONG and MOVIE Column must be in the file)",
+                                      type=["xlsx"])
+    st.write(
+        "Upload a file containing movie data. The file must be in Excel format (XLSX) with 'SONG' and 'MOVIE' columns.")
     # Add some spacing for better readability
     st.write("")  # Empty line for spacing
 
@@ -25,9 +28,12 @@ def main():
             st.error(f"Error occurred while reading the files: {e}")
             return
 
+        filename = st.text_input("Enter the Output filename:") + ".xlsx"
+
         # Process the data
         if st.button("Match Title"):
-            df_song['SONG_Splitted'] = df_song['SONG'].apply(lambda x: ' '.join(str(x).split()[:2]) if isinstance(x, str) and len(x.split()) > 2 else x)
+            df_song['SONG_Splitted'] = df_song['SONG'].apply(
+                lambda x: ' '.join(str(x).split()[:2]) if isinstance(x, str) and len(x.split()) > 2 else x)
             df_Title['SONG'] = ''
             df_Title['MOVIE'] = ''
 
@@ -45,24 +51,23 @@ def main():
 
             # Save the processed data
             try:
-                filename = str(df_song['LANGUAGE'].mode().iloc[0])  # Get the mode and convert it to a string
-                filename = filename + ".xlsx"
-                df_Title.to_excel(filename , index=False)
-                
-                st.success(f"Processing completed and file saved as {filename}.xlsx")
+                df_Title.to_excel(filename, index=False, engine='xlsxwriter')
+
+                st.success(f"Processing completed and file saved")
 
                 # Download button
                 download_button = create_download_button(filename)
                 st.markdown(download_button, unsafe_allow_html=True)
+
             except Exception as e:
                 st.error(f"Error occurred while saving the file: {e}")
 
 
-def create_download_button(file_path):
-    with open(file_path, "rb") as file:
+def create_download_button(filename):
+    with open(filename, "rb") as file:
         file_content = file.read()
     base64_encoded_file = base64.b64encode(file_content).decode('utf-8')
-    download_button = f'<a href="data:application/octet-stream;base64,{base64_encoded_file}" download= "Odia_Songs.xlsx">Download Excel File</a>'
+    download_button = f'<a href="data:application/octet-stream;base64,{base64_encoded_file}" download= {filename}>Download Excel File</a>'
     return download_button
 
 
