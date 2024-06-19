@@ -53,7 +53,8 @@ def main():
 
             # Save the processed data
             try:
-                df_Title.to_excel(filename, index=False)
+                df_Title.to_excel(filename, index=False, engine='openpyxl')
+
 
                 st.success(f"Processing completed and file saved")
 
